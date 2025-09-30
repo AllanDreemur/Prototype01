@@ -1,47 +1,26 @@
-// Example program:
-// Using SDL3 to create an application window
-
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
 
 int main(int argc, char* argv[]) {
+	// Initializes SDL_VIDEO
+	SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* window;                    // Declare a pointer
-    bool done = false;
+	// Creates a SDL Window
+	SDL_Window *window;
+	window = SDL_CreateWindow("title",600,400,0);
 
-    SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL3
+	// Creates a Renderer
+	SDL_Renderer* renderer;
+	renderer = SDL_CreateRenderer(window,NULL);
 
-    // Create an application window with the following settings:
-    window = SDL_CreateWindow(
-        "An SDL3 window",                  // window title
-        640,                               // width, in pixels
-        480,                               // height, in pixels
-        SDL_WINDOW_OPENGL                  // flags - see below
-    );
+	SDL_SetRenderDrawColor(renderer,96,96,96,255);
 
-    // Check that the window was successfully created
-    if (window == NULL) {
-        // In the case that the window could not be made...
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not create window: %s\n", SDL_GetError());
-        return 1;
-    }
+	// Clears the screen
+	SDL_RenderClear(renderer);
 
-    while (!done) {
-        SDL_Event event;
+	// Draws the screen
+	SDL_RenderPresent(renderer);
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_EVENT_QUIT) {
-                done = true;
-            }
-        }
+	SDL_Delay(3000);
 
-        // Do game logic, present a frame, etc.
-    }
-
-    // Close and destroy the window
-    SDL_DestroyWindow(window);
-
-    // Clean up
-    SDL_Quit();
-    return 0;
+	return 0;
 }
